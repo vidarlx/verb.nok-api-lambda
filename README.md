@@ -1,1 +1,1 @@
-# verb.nok-api-lambda
+verbs.nok API based on AWS Lambda
