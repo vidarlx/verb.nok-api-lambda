@@ -12,15 +12,11 @@ exports.handler = function(event, context, callback) {
         ProjectionExpression: "norsk_verb, polsk_verb"
     };
     
-    ddb.scan(params, onVerbsFound);
-    
-    callback(null, "200!");
-}
+    ddb.scan(params, (err, data) => {
+      if (err) {
+        return callback(err);
+      }
 
-function onVerbsFound(err, data) {
-    if (err) {
-       return callback(err);
-    }
-    
-    callback(null, data);
-}
+      callback(null, data.Items);
+    });
+  }
