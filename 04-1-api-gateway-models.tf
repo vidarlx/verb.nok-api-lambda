@@ -1,4 +1,4 @@
-resource "aws_api_gateway_model" "get_verbs_model" {
+resource "aws_api_gateway_model" "get_verbs" {
   rest_api_id  = "${aws_api_gateway_rest_api.verbs_nok_api.id}"
   name         = "GetVerbsSchema"
   description  = "a JSON schema"
