@@ -1,11 +1,3 @@
-resource "aws_api_gateway_rest_api" "verbs_nok_api" {
-  name = "VerbsNokApi"
-
-  endpoint_configuration {
-    types = ["REGIONAL"]
-  }
-}
-
 resource "aws_api_gateway_resource" "get_verbs" {
   rest_api_id = "${aws_api_gateway_rest_api.verbs_nok_api.id}"
   parent_id   = "${aws_api_gateway_rest_api.verbs_nok_api.root_resource_id}"
