@@ -1,40 +1,26 @@
 const AWS = require('aws-sdk');
-const ddb = new AWS.DynamoDB.DocumentClient();
+
+const TABLE_NAME = "NorskVerb";
 
 AWS.config.update({
   region: "eu-west-2"
 });
 
 exports.handler = function (event, context, callback) {
-  let verb = '';
-  let response = null;
+  const ddb = new AWS.DynamoDB.DocumentClient();
   
-  const body = JSON.parse(event.body)
-  if (body.verb) {
-    verb = body.verb;
-  }
+  let verb = getVerb(event);
 
   if (!verb) {
-    response = {
-      "statusCode": 404,
-      "message": "Not found"
-    };
-    callback(response);
+    callback("Not found");
   }
 
-  var params = {
-    TableName: "NorskVerb",
-    Key: {
-      norsk_verb: verb
-    }
-  };
-
-  ddb.get(params, (err, data) => {
+  ddb.get(prepareQuery(verb), (err, data) => {
     if (err) {
-      return callback(err);
+      return callback(err.message);
     }
 
-    response = {
+    const response = {
       "statusCode": 200,
       "headers": {
       },
@@ -43,4 +29,22 @@ exports.handler = function (event, context, callback) {
     };
     callback(null, response);
   });
+}
+
+function prepareQuery(verb) {
+  return {
+    TableName: TABLE_NAME,
+    Key: {
+      norsk_verb: verb
+    }
+  };
+}
+
+function getVerb(event) {
+  const body = JSON.parse(event.body);
+  let verb = null;
+  if (body.verb) {
+    verb = body.verb;
+  }
+  return verb;
 }

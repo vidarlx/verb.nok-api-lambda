@@ -2,3 +2,4 @@
 *.zip
 .bundle/
 terraform.*
+node_modules/
