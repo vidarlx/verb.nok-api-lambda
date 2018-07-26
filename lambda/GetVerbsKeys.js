@@ -6,24 +6,28 @@ AWS.config.update({
 });
 
 exports.handler = function (event, context, callback) {
-
-  var params = {
-    TableName: "NorskVerb",
-    ProjectionExpression: "norsk_verb, polsk_verb"
-  };
-
-  ddb.scan(params, (err, data) => {
+  ddb.scan(createDbQuery(), (err, data) => {
     if (err) {
       return callback(err);
     }
 
-    var response = {
-      "statusCode": 200,
-      "headers": {
-      },
-      "body": JSON.stringify( data.Items),
-      "isBase64Encoded": false
-    };
-    callback(null, response);
+    callback(null, createResponse(data.Items));
   });
+}
+
+function createDbQuery() {
+  return {
+    TableName: "NorskVerb",
+    ProjectionExpression: "norsk_verb, polsk_verb"
+  };
+}
+
+function createResponse(data) {
+  return {
+    "statusCode": 200,
+    "headers": {
+    },
+    "body": JSON.stringify(data),
+    "isBase64Encoded": false
+  }
 }
