@@ -23,6 +23,7 @@ exports.handler = function (event, context, callback) {
     const response = {
       "statusCode": 200,
       "headers": {
+        'Access-Control-Allow-Origin' : 'https://verbs.nok.blue'
       },
       "body": JSON.stringify(data.Item),
       "isBase64Encoded": false
