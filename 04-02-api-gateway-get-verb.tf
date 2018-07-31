@@ -37,6 +37,12 @@ resource "aws_api_gateway_integration" "get_verb" {
   uri                     = "arn:aws:apigateway:eu-west-2:lambda:path/2015-03-31/functions/${aws_lambda_function.get_verb.arn}/invocations"
 }
 
+module "CORSResource" {
+  source      = "github.com/carrot/terraform-api-gateway-cors-module"
+  rest_api_id = "${aws_api_gateway_rest_api.verbs_nok_api.id}"
+  resource_id = "${aws_api_gateway_resource.get_verb.id}"
+}
+
 resource "aws_lambda_permission" "get_verb_lambda_ag" {
   statement_id  = "AllowGetVerbsKeysInvokeFromAPIGateway"
   action        = "lambda:InvokeFunction"

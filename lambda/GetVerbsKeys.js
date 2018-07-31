@@ -26,7 +26,7 @@ function createResponse(data) {
   return {
     "statusCode": 200,
     "headers": {
-      'Access-Control-Allow-Origin' : 'https://verbs.nok.blue'
+      'Access-Control-Allow-Origin' : '*'
     },
     "body": JSON.stringify(data),
     "isBase64Encoded": false
