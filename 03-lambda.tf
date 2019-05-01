@@ -10,7 +10,7 @@ resource "aws_lambda_function" "get_verbs_keys" {
   role             = "${aws_iam_role.iam_for_lambda.arn}"
   handler          = "GetVerbsKeys.handler"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
-  runtime          = "nodejs6.10"
+  runtime          = "nodejs8.10"
 
   environment {
     variables = {
@@ -25,5 +25,5 @@ resource "aws_lambda_function" "get_verb" {
   role             = "${aws_iam_role.iam_for_lambda.arn}"
   handler          = "GetVerb.handler"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
-  runtime          = "nodejs6.10"
+  runtime          = "nodejs8.10"
 }
